@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+  
+<html>
+<head>
+      <title>New User Form</title>
+      <meta charset="utf-8" ></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
+      <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" ></link>
+	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/User/Show}"
+					   method="post" class="form-horizontal"
+					  role="form">
+					<h2>Find  User </h2>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text"  name="email_id" placeholder="Email"
+								   class="form-control" ></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Search User</button>
+						</div>
+					</div>
+				</form>
+				<form autocomplete="off" action="#" th:action="@{/NewUser}"
+					th:object="${userAuthCommand}" method="post" class="form-horizontal"
+					role="form">
+					<h2>New User Form</h2>
+					<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<p>Please Correct Errors Below</p>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="hidden" th:field="*{user.userId}" placeholder="ID"
+								   class="form-control" ></input>
+						</div>
+					</div>
+					<div class="form-group" >
+						<div class="col-sm-9" >
+							<input type="text" th:field="*{user.email}" placeholder="Email"
+								class="form-control" ></input> <label
+								th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group" >
+						<div class="col-sm-9">
+							<label th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}"
+								   class="validation-message"></label>
+							<input type="text" th:field="*{user.username}" placeholder="Name"
+								   class="form-control" ></input>
+						</div>
+					</div>
+					<div class="col-sm-9 form-group"  th:class="${#fields.hasErrors('password')}
+                                ? 'col-sm-9 form-group has-error' : 'col-sm-9 form-group'">
+							<input  type="password" th:field="*{password}"
+									placeholder="Password" class="form-control" th:errorclass="has-error" ></input>
+
+							<span class="help-block" th:if="${#fields.hasErrors('password')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.hasErrors('password')}"  th:errors="*{password}" class="validation-message"/>
+                                        </ul>
+                                    </span>
+					</div>
+
+					<div class="form-group"   >
+						<div class="col-sm-9">
+							<label>Role :</label>
+								<select class="form-control" name="userRoles.roleId" th:field = "*{user.accessType}">
+									<option th:each="role : ${roles}"
+											th:value="${role.roleId}"
+											th:text="${role.accessDesc}">Each</option>
+								</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Create User</button>
+						</div>
+					</div>
+
+					
+					<span th:utext="${successMessage}"></span>
+
+					
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+</html>

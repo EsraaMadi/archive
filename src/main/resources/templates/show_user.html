@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New User Form</title>
+    <meta charset="utf-8" ></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" ></link>
+    <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1 class="panel-title">The User!</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" >
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Access</th>
+                                <th>Password</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>123</td>
+                                <td>Tasty Goodnees 1</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td>12333</td>
+                                <td>Tasty Goodnees 2</td>
+                                <td><a href="#">View</a></td>
+                            </tr>
+                            <tr >
+                                <td th:text="${userAuthCommand.user.email}">334</td>
+                                <td th:text="${userAuthCommand.user.username}">Tasty Goodnees 3</td>
+                                <td th:text="${userAuthCommand.user.accessType}">Tasty Goodnees 3</td>
+                                <td><a href="#" th:href="@{/index}">Rest Password</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(userAuthCommand.user.userRoles)}" >
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Access ID</th>
+                                <th>Access Desc</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td>123</td>
+                                <td>Tasty Goodnees 1</td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td>12333</td>
+                                <td>Tasty Goodnees 2</td>
+                            </tr>
+                            <tr th:each="role : ${userAuthCommand.user.userRoles}">
+                                <td th:text="${role.roleId}">334</td>
+                                <td th:text="${role.accessDesc}">Tasty Goodnees 3</td>
+                                <td><a href="#" th:href="@{'/User/Show/'+${userAuthCommand.user.userId}+'/access/'+${role.roleId}+'/delete'}">Delete</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <form autocomplete="off" action="#" th:action="@{'/User/Show/'+${userAuthCommand.user.userId}+'/access/new'}"
+                      th:object="${userAuthCommand}" method="post" class="form-horizontal"
+                      role="form">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Add New Access: </h1>
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-group"   >
+                        <div class="col-sm-5">
+                            <label>Role :</label>
+                            <select class="form-control" name="roleId" id="roleId">
+                                <option th:each="role : ${roles}"
+                                        th:value="${role.roleId}"
+                                        th:selected="${role.roleId.equals(userAuthCommand.user.accessType)}"
+                                        th:text="${role.accessDesc}">Each</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary btn-block">Add</button>
+                        </div>
+                    </div>
+
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+  <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<title>404 Not Found Error</title>
+	<meta charset="utf-8" ></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" ></link>
+	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container-fluid" style="margin-top: 20px">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<h1>404 Bad request</h1>
+			<p th:text="${exception.getMessage()}"></p>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
