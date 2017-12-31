@@ -60,7 +60,7 @@
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3.0</version>
-			<scope>system</scope><systemPath>${project.basedir}/ojdbc6\ojdbc6.jar</systemPath>
+			<scope>system</scope><systemPath>${project.basedir}/src\main\resources\ojdbc6\ojdbc6.jar</systemPath>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
@@ -111,6 +111,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check />
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
