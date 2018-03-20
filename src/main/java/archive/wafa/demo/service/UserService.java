@@ -12,6 +12,7 @@ public interface UserService extends CRUDService<User>  {
 	 UserCommand findUserCommandByEmail(String email);
 	UserCommand findUserCommandByUserId(Long id );
 	UserCommand saveOrUpdate(UserCommand userCommand);
+	UserCommand saveOrUpdateManual(String userEmail , String userPassword );
 	//public Optional<User> findByEmail(String email);
 
 }

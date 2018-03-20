@@ -18,9 +18,10 @@ public class UserCommand {
     private Long userId;
     private String username;
     private int accessType;
+    private Long isActionTaken;
 
-    @Email(message = "*Please provide a valid Email2")
-    @NotEmpty(message = "*Please provide an email2")
+    @Email(message = "*Please provide a valid Email")
+    @NotEmpty(message = "*Please provide an email")
     private String email;
     private Set<UserRolesCommand> userRoles = new HashSet<>();
 

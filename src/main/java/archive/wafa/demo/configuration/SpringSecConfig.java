@@ -74,17 +74,22 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
  			.antMatchers("/").permitAll()
  			.antMatchers("/index").permitAll()
  			.antMatchers("/login_page").permitAll()
+            .antMatchers("/archive").permitAll()
+            .antMatchers("/scan/doc").permitAll()
+                // .antMatchers("/Archive/doc/**").permitAll()
  			.antMatchers("/registration").permitAll()
  			.antMatchers("/home").hasAuthority("Archive_User")
             .antMatchers("/NewUser").permitAll()
+                 .antMatchers("/NewUserW").permitAll()
                  .antMatchers("/NewUser/Search/**").permitAll()
+
  			.antMatchers("/admin/**").hasAuthority("ADMIN")
  			.anyRequest().authenticated() // any request comming to app pages must be autorized
                  .and().csrf().disable()
  			.formLogin() // customize form login page
  			.loginPage("/login_page") // url for login page // need contoller to display form
  			.failureUrl("/login_page?error=true")
- 			.defaultSuccessUrl("/home") // or use .loginProcessingUrl() to check username and password
+ 			.defaultSuccessUrl("/index") // or use .loginProcessingUrl() to check username and password
  			.usernameParameter("username") // spring security filter will read this field from login form directly
  			.passwordParameter("password")
  			.and().logout()

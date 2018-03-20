@@ -1,6 +1,7 @@
 package archive.wafa.demo.bootstrap;
 
 
+import archive.wafa.demo.command.UserAuthCommand;
 import archive.wafa.demo.service.RoleService;
 import archive.wafa.demo.service.UserAuthService;
 import archive.wafa.demo.service.UserService;
@@ -17,7 +18,15 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     private UserService userService;
     private RoleService roleService;
     private UserAuthService userAuthService ;
+    //private SortedProcedureRepository sortedProcedureRepository;
     private Logger log = Logger.getLogger(SpringJpaBootstrap.class);
+    //
+
+
+  /*  @Autowired
+    public void setSortedProcedureRepository(SortedProcedureRepository sortedProcedureRepository) {
+        this.sortedProcedureRepository = sortedProcedureRepository;
+    }*/
 
     @Autowired
     public void setUserAuthService(UserAuthService userAuthService) {
@@ -34,12 +43,17 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         this.roleService = roleService;
     }
 
+  /*  @Autowired
+    public void setSortedProcedureRepository(SortedProcedureRepository sortedProcedureRepository) {
+        this.sortedProcedureRepository = sortedProcedureRepository;
+    }*/
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
 
-
+//Integer s_out = sortedProcedureRepository.archiveDoc("1201000797202");
+        //System.out.print( "111111111111111111111----------------  "+ s_out.toString() + "------");
 
         /*User user = new User("test-h", 4, "test-h@wafainsurance.com");
         UserAuth auth = new UserAuth(user, "123456");

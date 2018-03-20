@@ -8,6 +8,7 @@ import archive.wafa.demo.convertor.UserAuthToUserAuthCommand;
 import archive.wafa.demo.convertor.UserRolesToUserRolesCommand;
 import archive.wafa.demo.exception.NotFoundException;
 import archive.wafa.demo.model.UserRoles;
+import archive.wafa.demo.repository.SortedProcedureRepository;
 import archive.wafa.demo.service.RoleService;
 import archive.wafa.demo.service.UserAuthService;
 import archive.wafa.demo.service.UserService;
@@ -30,24 +31,32 @@ public class AdminController {
     private UserService userService;
     private UserRolesToUserRolesCommand userRolesConvertor;
     private UserAuthToUserAuthCommand userAuthCommand;
+    private SortedProcedureRepository sortedProcedureRepository ;
 
 
-    public AdminController(UserAuthService userAuthService, RoleService roleService, UserService userService, UserRolesToUserRolesCommand userRolesConvertor, UserAuthToUserAuthCommand userAuthCommand) {
+
+    public AdminController(SortedProcedureRepository sortedProcedureRepository ,UserAuthService userAuthService, RoleService roleService, UserService userService, UserRolesToUserRolesCommand userRolesConvertor, UserAuthToUserAuthCommand userAuthCommand) {
         this.userAuthService = userAuthService;
         this.roleService = roleService;
         this.userService = userService;
         this.userRolesConvertor = userRolesConvertor;
         this.userAuthCommand = userAuthCommand;
+        this.sortedProcedureRepository = sortedProcedureRepository;
 
     }
 
 
-    @RequestMapping(value="/NewUser", method = RequestMethod.GET)
-    public String NewUser(Model model){
+
+
+   /* @RequestMapping(value="/index", method = RequestMethod.GET)
+    public String index(Model model){
         model.addAttribute("userAuthCommand", new UserAuthCommand());
         model.addAttribute("roles", roleService.listAllRoles());
-        return "NewUser";
-    }
+        return "index";
+    }*/
+
+
+
 
     /*@RequestMapping(value="/User/Show", method = RequestMethod.GET)
     public String showUser( @ModelAttribute UserAuthCommand userAuth , Model model){
@@ -73,7 +82,7 @@ public class AdminController {
         model.addAttribute("roles", roleService.listAllRoles());
         return "show_user";
     }
-    @RequestMapping(value = "/NewUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/NewUserold", method = RequestMethod.POST)
 	public String createUser (@Valid @ModelAttribute ("userAuthCommand") UserAuthCommand userAuth /* ,@Valid @ModelAttribute ("userAuthCommand.user") UserCommand user */,BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
@@ -90,6 +99,7 @@ public class AdminController {
         userAuth.setEskaUserName(userAuth.getUser().getUsername());
         UserAuthCommand savedUser = userAuthService.saveOrUpdate(userAuth);
         return "redirect:/User/"+savedUser.getUser().getEmail()+"/Show";
+
 	}
     @RequestMapping(value="/User/Show/{accessId}/access/new", method = RequestMethod.POST)
     public String NewUserAccess(@PathVariable String accessId ,@RequestParam("roleId") Long roleId  , Model model){
@@ -145,4 +155,12 @@ public class AdminController {
 
 		return modelAndView;
 	}*/
+
+   /* @RequestMapping(value="/index", method = RequestMethod.GET)
+    public String archiveDocument(Model model){
+        model.addAttribute("userAuthCommand", new UserAuthCommand());
+        model.addAttribute("roles", roleService.listAllRoles());
+
+        return "index";
+    }*/
 }

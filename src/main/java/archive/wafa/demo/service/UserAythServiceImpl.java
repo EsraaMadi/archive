@@ -71,6 +71,10 @@ public class UserAythServiceImpl implements UserAuthService{
         return userAuthConvertor.convert(savedUserAuth);
     }
 
+    @Override
+    public String getEncryptedPassword(String Password) {
+        return encryptionService.encryptString(Password);
+    }
 
     @Override
         public void delete(Long id) {

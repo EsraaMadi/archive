@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+      <title>New User Form</title>
+      <meta charset="utf-8" ></meta>
+      <meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
+      <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" ></link>
+	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="/js/scan.js"></script>
+</head>
+<body>
+<div class="container">
+	<form id = "archiveDocumentForm" th:object="${document}" th:action="@{'/Archivee/doc/' +${document.DocumentNo}}"
+		  method="GET" class="form-signin"  >
+		<h3 class="form-signin-heading" th:text="Doc"></h3>
+		<br/>
+
+		<input th:type="number" th:maxlength="13" id="barcode" name="barcode"  th:placeholder="BarcodeNumber"
+			   class="form-control" th:field="*{DocumentNo}" >
+
+		</input> <br/>
+		<input th:type="number"  id="docid"  th:placeholder="DocID"
+			   class="form-control" th:field="*{documentId}" >
+
+		</input> <br/>
+	</form>
+</div>
+</body>
+</html>

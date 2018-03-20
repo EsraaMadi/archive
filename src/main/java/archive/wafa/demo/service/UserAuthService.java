@@ -8,4 +8,5 @@ import archive.wafa.demo.model.UserAuth;
 public interface UserAuthService extends CRUDService <UserAuth > {
      UserAuth findByUser(Long userid);
      UserAuthCommand saveOrUpdate(UserAuthCommand authCommand);
+     String getEncryptedPassword (String Password);
 }
