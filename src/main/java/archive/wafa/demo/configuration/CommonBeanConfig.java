@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:messages_en.properties")
+//@PropertySource("classpath:messages")
+//@PropertySource({"classpath:messages_en.properties","classpath:messages_ar.properties"})
 public class CommonBeanConfig {
 
     @Bean
@@ -14,5 +15,6 @@ public class CommonBeanConfig {
         StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
         return encryptor;
     }
+
     
 }

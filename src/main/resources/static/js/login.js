@@ -1,14 +1,24 @@
-   /* jQuery.i18n.properties({
-        name: 'messages',
-        path: 'bundle/',
-        mode: 'both',
-        language: 'en',
-        callback: function () {
-            $("#userEmail").text($.i18n.prop('userAuthCommand.password'));
-            //jQuery.i18n.prop('msg_hello');
-            alert(jQuery.i18n.prop('userAuthCommand.password'));
-        }
-    });
+/*   $(document).ready(function() {
+      $("#locales").change(function () {
+          alert ("Esraa")
+          var selectedOption = $('#locales').val();
+          if (selectedOption !== ''){
+              window.location.replace('locale?lang=' + selectedOption);
+          }
+      });
+  });
+
+jQuery.i18n.properties({
+      name: 'messages',
+      path: 'bundle/',
+      mode: 'both',
+      language: 'en',
+      callback: function () {
+          $("#userEmail").text($.i18n.prop('userAuthCommand.password'));
+          //jQuery.i18n.prop('msg_hello');
+          alert(jQuery.i18n.prop('userAuthCommand.password'));
+      }
+  });
 */
 
 /*var email = document.getElementById("userEmail");

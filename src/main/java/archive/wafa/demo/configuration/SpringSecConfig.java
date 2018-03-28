@@ -72,20 +72,19 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
     	 httpSecurity.
  		authorizeRequests()
  			.antMatchers("/").permitAll()
- 			.antMatchers("/index").permitAll()
- 			.antMatchers("/login_page").permitAll()
-            .antMatchers("/archive").permitAll()
+                 .antMatchers("/NewUser").permitAll()
+                 .antMatchers("/login_page").permitAll()
+
+                 .antMatchers("/index").hasAuthority("Archive_User")
+                 .antMatchers("/archive").hasAuthority("Archive_User")
             .antMatchers("/scan/doc").permitAll()
-                // .antMatchers("/Archive/doc/**").permitAll()
  			.antMatchers("/registration").permitAll()
  			.antMatchers("/home").hasAuthority("Archive_User")
-            .antMatchers("/NewUser").permitAll()
-                 .antMatchers("/NewUserW").permitAll()
-                 .antMatchers("/NewUser/Search/**").permitAll()
-
+            .antMatchers("/NewUserW").permitAll()
+            .antMatchers("/NewUser/Search/**").permitAll()
  			.antMatchers("/admin/**").hasAuthority("ADMIN")
  			.anyRequest().authenticated() // any request comming to app pages must be autorized
-                 .and().csrf().disable()
+            .and().csrf().disable()
  			.formLogin() // customize form login page
  			.loginPage("/login_page") // url for login page // need contoller to display form
  			.failureUrl("/login_page?error=true")
@@ -94,7 +93,7 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
  			.passwordParameter("password")
  			.and().logout()
  			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
- 			.logoutSuccessUrl("/login_page?logout") // it is optional to use it becase spring security by defult send ?logout paramter
+ 			.logoutSuccessUrl("/login_page?logout") // it is optional to use it because spring security by defult send ?logout paramter
  			.and().exceptionHandling().accessDeniedPage("/access-denied");
     	 
     	/* httpSecurity
@@ -108,6 +107,7 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
  httpSecurity.csrf().disable();
  httpSecurity.headers().frameOptions().disable();*/
     }
+
 
 
 }

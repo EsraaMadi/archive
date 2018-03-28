@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" th:dir="#{lang.dir}" xmlns:th="http://www.w3.org/1999/xhtml">
+
   <head>
-    <meta charset="utf-8"></meta>
+    <meta charset="UTF-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
     <meta name="description" content=""></meta>
     <meta name="author" content="Dashboard"></meta>
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"></meta>
+
 
     <title>DATS - Archive Documents System</title>
 
@@ -38,46 +40,59 @@
 	  	<div class="container">
 	  	
 		      <form class="form-login" th:action="@{/login_page}" method="POST" th:object="${userAuthCommand}">
-		        <h2 class="form-login-heading">sign in now</h2>
+				  <div th:class="btn-group">
+					  <button type="button" class="btn btn-wafa-custom" th:text="#{lang.tx}">Language</button>
+					  <button type="button" class="btn btn-wafa-custom dropdown-toggle" data-toggle="dropdown">
+						  <span class="caret"></span>
+						  <span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+						  <li><a th:href="@{/login_page?lang=ar}" th:text="#{lang.arabic}">Arabic</a></li>
+						  <li class="divider"></li>
+						  <li><a th:href="@{/login_page?lang=en}" th:text="#{lang.english}">English</a></li>
+					  </ul>
+				  </div>
+		        <h2 class="form-login-heading" th:text="#{login.header.tx}">sign in now</h2>
 		        <div class="login-wrap">
 					<div th:if="${param.create}">
 						<br>
-						<p style="color: #40c142;" >Your Username has been created : <span th:text="*{eskaUserName}"></span></p>
+						<p style="color: #40c142;" > <span th:text="#{login.create.msg.tx}+*{eskaUserName}"></span></p>
 					</div>
 					<div  th:if="${param.sign}">
 						<br>
-						<p style="color: #FF1C19;" >Your Username has been created before </p>
+						<p style="color: #FF1C19;" ><span th:text="#{login.sign.msg.tx}"></span></p>
 					</div>
 					<br>
-					<input type="text"  autofocus th:id="username" th:name="username"  th:placeholder="Username"
+					<input type="text"  autofocus th:id="username" th:name="username"  th:placeholder="#{login.username.tx}"
 						   class="form-control" th:value="*{eskaUserName}"></input>
 					<br><br>
-					<input type="password"  th:placeholder="Password"
+					<input type="password"  th:placeholder="#{login.password.tx}"
 						   id="password" name="password" class="form-control" ></input>
 					<br>
 					<div align="left" th:if="${param.error}">
 						<br>
-						<p style="color: #FF1C19;">Username  or Password invalid, please verify</p>
+						<p style="color: #FF1C19;"><span th:text="#{login.wrong.msg.tx}"></span></p>
 					</div>
 					<div align="center" th:if="${param.logout}">
 						<br>
-						<p style="color: #FF1C19;">You are Logout</p>
+						<p style="color: #FF1C19;"><span th:text="#{logout.msg.tx}"></span></p>
 					</div>
 		            <label class="checkbox">
-		                <span class="pull-right">
-		                    <a data-toggle="modal" href="login.html#forgetPasswordModal"> Forgot Password?</a>
+		                <span th:class="#{lang.button.dir}">
+		                    <a data-toggle="modal" href="login.html#forgetPasswordModal" th:text="#{login.forgetpassword.tx}" > Forgot Password?</a>
 		                </span>
 		            </label>
 					<br>
-		            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+		            <button class="btn btn-theme btn-block" href="index.html" type="submit" th:text="#{login.button.tx}" ><i class="fa fa-lock"></i> SIGN IN</button>
 					<br><br>
 		            <hr>
 
 
-		            <div class="registration">
-		                Don't have an account yet?<br/>
+		            <div class="registration"  >
+						<span th:text="#{login.question.tx}"></span>
+						<br/>
 						<span class="">
-		                    <a data-toggle="modal" href="login.html#newUserModal"> Create an account</a>
+		                    <a data-toggle="modal" href="login.html#newUserModal" ><span th:text="#{login.createuser.tx}"></span></a>
 		                </span>
 		            </div>
 		
@@ -115,26 +130,26 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title">New Account</h4>
+								<button type="button" th:class="'close ' + #{lang.button.dir}"  data-dismiss="modal" aria-hidden="true" >&times;</button>
+								<h4 class="modal-title" th:text="#{model.header.tx}">New Account</h4>
 							</div>
 							<div class="modal-body">
 								<input type="email" required  pattern="[A-Za-z]+@[Ww][Aa][Ff][Aa][Ii][Nn][Ss][Uu][Rr][Aa][Nn][Cc][Ee].[Cc][oO][mM]"
-									   th:attr="data-errormessage-value-missing=${@environment.getProperty('NotEmpty.userAuthCommand.user.email')} ,data-errormessage-pattern-mismatch=${@environment.getProperty('Email.userAuthCommand.user.email')} "
-									   name="email" placeholder="Wafa E-mail For example : joe@wafainsurance.com" autocomplete="off" id="userEmail" class="form-control placeholder-no-fix" th:field="*{user.email}" >
+									   th:attr="data-errormessage-value-missing=#{NotEmpty.userAuthCommand.user.email} ,data-errormessage-pattern-mismatch=#{Email.userAuthCommand.user.email} "
+									   name="email" th:placeholder="#{model.email.tx}" autocomplete="off" id="userEmail" class="form-control placeholder-no-fix" th:field="*{user.email}" >
 								<!--<span class="help-block"  th:if="${#fields.hasErrors('user.email')}">
 									<ul><li th:each="err : ${#fields.hasErrors('user.email')}"  th:errors="*{user.email}" class="validation-message"/></ul>
 								</span>-->
 								<br>
-								<input type="password"  required pattern=".{5,15}" th:attr="data-errormessage-value-missing=${@environment.getProperty('NotEmpty.userAuthCommand.password')} ,data-errormessage-pattern-mismatch=${@environment.getProperty('Length.userAuthCommand.password')}"
-									   name="password" placeholder="A Password between 5 and 15" autocomplete="off" id="userPassword" class="form-control placeholder-no-fix" th:field="*{password}"  >
+								<input type="password"  required pattern="^\S{5,15}$" th:attr="data-errormessage-value-missing=#{NotEmpty.userAuthCommand.password} ,data-errormessage-pattern-mismatch=#{Length.userAuthCommand.password}"
+									   name="password" th:placeholder="#{model.password.tx}" autocomplete="off" id="userPassword" class="form-control placeholder-no-fix" th:field="*{password}"  >
 								<!--<span class="help-block" th:if="${#fields.hasErrors('password')}">
 									<ul><li th:each="err : ${#fields.hasErrors('password')}"  th:errors="*{password}" class="validation-message"/></ul>
 								</span>-->
 							</div>
 							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-								<button   type="submit" class="btn btn-theme" id="sumbitId">Create</button>
+								<button data-dismiss="modal" th:class="'btn btn-default '+ #{lang.button.dir}" type="button" th:text="#{model.cancle.button.tx}">Cancel</button>
+								<button   type="submit" th:class="'btn btn-theme '+ #{lang.button.dir}" id="sumbitId" th:text="#{model.ok.button.tx}">Create</button>
 								<!--<button onclick="formSubmit()" id="userButton" type="button" class="btn btn-theme">Javascript</button>
 								<button onclick="formSubmit()" type="button" data-toggle="modal" data-target="#forgetPasswordModal">Launch modal</button> -->
 							</div>

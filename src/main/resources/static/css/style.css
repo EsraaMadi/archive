@@ -2004,6 +2004,20 @@ label {
 	border-radius: 5px;
 }
 
+.btn-wafa-custom {
+    color: #fff;
+    background-color: #98c37b;
+    border-color: #799b62;
+}
+.btn-wafa-custom:hover,
+.btn-wafa-custom:focus,
+.btn-wafa-custom:active,
+.btn-wafa-custom.active,
+.open .dropdown-toggle.btn-wafa-custom {
+    color: #fff;
+    background-color: #98c37b;
+    border-color: #799b62;
+}
 
 .btn-facebook {
   color: #fff;
