@@ -15,15 +15,13 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 
 @Slf4j
 @Controller
@@ -35,6 +33,7 @@ public class LoginController {
 	private RoleService roleService ;
 	private UserAuthService userAuthService;
 	private UserRolesToUserRolesCommand userRolesConvertor;
+	private String language;
 
 
 	public LoginController(UserService userService, RoleService roleService, UserAuthService userAuthService, UserRolesToUserRolesCommand userRolesConvertor) {
@@ -45,14 +44,29 @@ public class LoginController {
 	}
 
 	// Get - Login page
-	@RequestMapping(value={"/", "/login_page"}, method = RequestMethod.GET)
-	public String  login_page(@Valid @ModelAttribute("userAuthCommand") UserAuthCommand userAuth , BindingResult bindingResult){
+	@RequestMapping(value={"/","/login_page"}, method = RequestMethod.GET)
+	public String  login_page( @Valid @ModelAttribute("userAuthCommand") UserAuthCommand userAuth , BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
 			bindingResult.getAllErrors().forEach(objectError -> {
 				log.error(objectError.toString());
 			});
 		}
+
+		 language= request.getParameter("lang");
+		if (language== null)
+		{
+			language="en";
+		}
+		//System.setProperty("app.lang.test",language);
+		//System.out.println("-----------------222"+ System.getProperty("app.lang.test"));
+		//System.out.println("----------------------"+language);
 		return "login";
+	}
+
+	// Get - index page
+	@RequestMapping("/loginindex")
+	String loginindex(){
+		return "redirect:index?lang="+language;
 	}
 
 	// Get - index page
@@ -80,7 +94,7 @@ public class LoginController {
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.error(objectError.toString());
             });
-			return "redirect:/login_page";
+			return "redirect:/login_page?lang="+language;
         }
 
         UserCommand savedUser = userService.saveOrUpdateManual(userAuth.getUser().getEmail(), userAuthService.getEncryptedPassword(userAuth.getPassword()));
@@ -89,11 +103,11 @@ public class LoginController {
 		//System.out.println("0000000000000000000   "+savedUser.getIsActionTaken());
 		redirectAttributes.addFlashAttribute("userAuthCommand", userAuth);
 		if (savedUser.getIsActionTaken()== 1) {
-			return "redirect:/login_page?create=true";
+			return "redirect:/login_page?lang="+language+"&create=true";
 		}
 		else
 		{
-			return "redirect:/login_page?sign=true";
+			return "redirect:/login_page?lang="+language+"&sign=true";
 		}
 	}
 
@@ -104,7 +118,7 @@ public class LoginController {
 		if (auth != null){
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login_page?logout";
+		return "redirect:/login_page?lang="+language+"&logout";
 	}
 	/*
 	// Post - JS - Create new User

@@ -35,7 +35,7 @@
 
 <body>
 
-<section id="container" >
+<section id="container">
     <!-- **********************************************************************************************************************************************************
     TOP BAR CONTENT
     *********************************************************************************************************************************************************** -->
@@ -49,7 +49,7 @@
         <!--logo end-->
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" th:href="@{/logout}" >Logout</a></li>
+                <li><a class="logout" th:href="@{/logout}" th:text="#{logout.tx}">Logout</a></li>
             </ul>
         </div>
     </header>
@@ -65,19 +65,19 @@
             <ul class="sidebar-menu" id="nav-accordion">
 
                 <p class="centered"><a th:href="@{/index}"><img src="/images/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                <h5 class="centered" th:text ="${user.username}">UserName :</h5>
+                <h4 class="centered thick" th:text ="${user.username}">UserName :</h4>
 
                 <li class="mt">
                     <a class="active" th:href="@{/archive}">
-                        <i class="fa fa-file-text" aria-hidden="true"></i>
-                        <span>Documents</span>
+                        <h4> <i class="fa fa-file-text" aria-hidden="true"></i>
+                        <span th:text="#{list.document.tx}">Documents</span></h4>
                     </a>
                 </li>
 
                 <li class="sub-menu">
                     <a href="javascript:;" >
-                        <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                        <span>Holders</span>
+                        <h4><i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                        <span th:text="#{list.holder.tx}">Holders</span></h4>
                     </a>
                     <ul class="sub">
                         <li><a  href="general.html">General</a></li>
@@ -88,8 +88,8 @@
 
                 <li class="sub-menu">
                     <a href="javascript:;" >
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                        <span>Users</span>
+                        <h4> <i class="fa fa-users" aria-hidden="true"></i>
+                        <span th:text="#{list.user.tx}">Users</span></h4>
                     </a>
                     <ul class="sub">
                         <li><a  href="calendar.html">Calendar</a></li>
@@ -109,10 +109,10 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper site-min-height">
-            <h3><i class="fa fa-angle-right"></i> Index Page</h3>
+            <h3><i class="fa fa-angle-right"></i> <span th:text="#{indexPage.tx}"></span></h3>
             <div class="row mt">
                 <div class="col-lg-12">
-                    <p>Welcome tho</p>
+                    <p class="thick"><span th:text="#{indexPage.welcome.tx}"></span></p>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
     <br>
     <footer class="site-footer navbar-fixed-bottom">
         <div class="text-center">
-            2018 - WafaIns
+            <span th:text="#{copyrigths.tx}"></span>
             <a href="index.html#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>

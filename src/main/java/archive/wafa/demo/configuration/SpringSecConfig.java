@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,10 +22,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 //Spring Security with the DAO authentication provider to secure our Spring Boot Web application
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+//@PropertySource("classpath:messages.properties")
+/*@PropertySources({
+        @PropertySource("classpath:messages_ar.properties"),
+        @PropertySource("classpath:messages_en.properties")
+})*/
 public class SpringSecConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationProvider authenticationProvider;
+    //@Autowired
+   // private Environment env;
 
 
     
@@ -69,13 +79,15 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
  //Authorization, 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+       // System.out.println("-----------------111111"+ System.getProperty("app.lang.test"));
     	 httpSecurity.
  		authorizeRequests()
  			.antMatchers("/").permitAll()
                  .antMatchers("/NewUser").permitAll()
                  .antMatchers("/login_page").permitAll()
-
-                 .antMatchers("/index").hasAuthority("Archive_User")
+                 .antMatchers("/loginindex").permitAll()
+                 .antMatchers("/index").permitAll()
+                 //.antMatchers("/index").hasAuthority("Archive_User")
                  .antMatchers("/archive").hasAuthority("Archive_User")
             .antMatchers("/scan/doc").permitAll()
  			.antMatchers("/registration").permitAll()
@@ -88,7 +100,7 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
  			.formLogin() // customize form login page
  			.loginPage("/login_page") // url for login page // need contoller to display form
  			.failureUrl("/login_page?error=true")
- 			.defaultSuccessUrl("/index") // or use .loginProcessingUrl() to check username and password
+ 			.defaultSuccessUrl("/loginindex") // or use .loginProcessingUrl() to check username and password
  			.usernameParameter("username") // spring security filter will read this field from login form directly
  			.passwordParameter("password")
  			.and().logout()
@@ -106,6 +118,7 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
 
  httpSecurity.csrf().disable();
  httpSecurity.headers().frameOptions().disable();*/
+
     }
 
 
