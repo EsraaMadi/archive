@@ -49,7 +49,7 @@
             <!--logo end-->
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" th:href="@{/logout}">Logout</a></li>
+                    <li><a class="logout" th:href="@{'/logout?lang='+${appLang}}" th:text="#{logout.tx}">Logout</a></li>
             	</ul>
             </div>
         </header>
@@ -63,24 +63,28 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-              
-              	  <p class="centered"><a th:href="@{/index}"><img src="/images/ui-sam.jpg" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered" th:text ="${user.username}">UserName :</h5>
-              	  	
-                  <li class="mt">
-                      <a class="active" href="index.html">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
+
+                  <p class="centered"><a th:href="@{/index}"><img src="/images/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                  <h4 class="centered thick" th:text ="${user.username}">UserName :</h4>
+                  <li class="sub-menu">
+                      <a class="active"  href="javascript:;" >
+                          <h4><i class="fa fa-file-text" aria-hidden="true"></i>
+                              <span  th:text="#{list.document.tx}">Documents</span></h4>
                       </a>
+                      <ul class="sub">
+                          <li><a  th:href="@{'/archive?lang='+${appLang}}">
+                              <h5><span th:text="#{list.document.scan}">Scan</span></h5></a></li>
+                      </ul>
                   </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>UI Elements</span>
+                          <h4><i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                              <span th:text="#{list.holder.tx}">Holders</span></h4>
                       </a>
                       <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
+                          <li><a  th:href="@{'/holder?lang='+${appLang}}">
+                              <h5><span th:text="#{list.holder.create}">Scan</span></h5></a></li>
                           <li><a  href="buttons.html">Buttons</a></li>
                           <li><a  href="panels.html">Panels</a></li>
                       </ul>
@@ -88,8 +92,8 @@
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Components</span>
+                          <h4> <i class="fa fa-users" aria-hidden="true"></i>
+                              <span th:text="#{list.user.tx}">Users</span></h4>
                       </a>
                       <ul class="sub">
                           <li><a  href="calendar.html">Calendar</a></li>
@@ -97,47 +101,6 @@
                           <li><a  href="todo_list.html">Todo List</a></li>
                       </ul>
                   </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="login.html">Login</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Form Components</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                      </ul>
-                  </li>
-
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -155,33 +118,33 @@
                   <div class="col-lg-9 main-chart">
                   
                   	<div class="row mtbox">
-                  		<div class="col-md-2 col-sm-2 col-md-offset-1 box0 box_g">
+                  		<div class="col-md-2 col-sm-2 col-md-offset-1 boxw box_g">
                   			<div class="box1">
                                 <span class="li_news"></span>
-					  			<h3 id="docSuccess">0</h3>
+					  			<h3 style="color:#4f844f;" id="docSuccess" th:text="${report.passDocOnceSum}">0</h3>
                   			</div>
-					  			<p> Documents have been archived successfully for the first time</p>
+					  			<p th:text="#{sum.archived.once}"> Documents have been archived successfully for the first time</p>
                   		</div>
-                  		<div class="col-md-2 col-sm-2 box0 box_b">
+                  		<div class="col-md-2 col-sm-2 boxw box_b">
                   			<div class="box1">
                                 <span class="li_stack"></span>
-					  			<h3 id = "docSuccessTwice">0</h3>
+					  			<h3 style="color:#457f9b;" id = "docSuccessTwice" th:text="${report.passDocTwiceSum}">0</h3>
                   			</div>
-                            <p> Documents have been archived successfully again</p>
+                            <p  th:text="#{sum.archived.again}"> Documents have been archived successfully again</p>
                   		</div>
-                  		<div class="col-md-2 col-sm-2 box0 box_r">
+                  		<div class="col-md-2 col-sm-2 boxw box_r">
                   			<div class="box1">
                                 <span class="li_note"></span>
-					  			<h3 id ="docFaild">0</h3>
+					  			<h3 style="color:#af504e;" id ="docFaild" th:text="${report.faildDocOnceSum}">0</h3>
                   			</div>
-                            <p> Documents failed to archive for the first time</p>
+                            <p   th:text="#{sum.unarchived.once}"> Documents failed to archive for the first time</p>
                   		</div>
-                  		<div class="col-md-2 col-sm-2 box0 box_y">
+                  		<div class="col-md-2 col-sm-2 boxw box_y">
                   			<div class="box1">
                                 <span class="li_data"></span>
-					  			<h3 id="docFaildTwice">0</h3>
+					  			<h3 style="color:#977d4f;" id="docFaildTwice" th:text="${report.faildDocTwiceSum}">0</h3>
                   			</div>
-                            <p> Documents failed to archive again</p>
+                            <p th:text="#{sum.unarchived.again}"> Documents failed to archive again</p>
                   		</div>
                   	
                   	</div><!-- /row mt -->	
@@ -190,18 +153,18 @@
 
                           <div class="row mt">
                               <div  class="col-lg-8 main-chart col-md-offset-1 box0">
-                                      <h4 class="mb"><i class="fa fa-angle-right"></i>  Scan Document :</h4>
+                                  <h4 th:dir=#{lang.dir} class="mb"><i class="fa fa-search-plus"  aria-hidden="true"></i><span  th:class="thick" th:text="'  '+#{scan.document.tx}"></span></h4>
                                       <form class="form-horizontal tasi-form"  id = "archiveDocumentForm" th:object="${document}" th:action="@{'/Archivee/doc/' +${document.DocumentNo}}"
                                             method="GET">
                                           <div class="form-group">
 
                                               <div class="col-sm-11 col-xs-offset-1">
-                                                  <input th:type="text" th:maxlength="12" id="holder" name="holder"  th:placeholder="HolderNumber"
-                                                         class="form-control round-form"  >
+                                                  <input th:type="text" th:maxlength="12" id="holder" name="holder"  th:placeholder="#{holder.barcode.tx}"
+                                                         class="form-control round-form thick"  th:dir=#{lang.dir}>
                                                   </input>
                                                   <br/>
-                                                  <input th:type="number" th:maxlength="13" id="barcode" name="barcode"  th:placeholder="BarcodeNumber"
-                                                         class="form-control round-form" th:field="*{DocumentNo}" >
+                                                  <input th:type="number" th:maxlength="13" id="barcode" name="barcode"  th:placeholder="#{document.barcode.tx}"
+                                                         class="form-control round-form thick" th:field="*{DocumentNo}" disabled th:dir=#{lang.dir}>
                                                   </input>
                                                   <br/>
                                               </div>
@@ -221,14 +184,41 @@
                                                                   </p>
                                                               </div>
                                                               <ul class="list-group text-center">
-                                                                  <li class="list-group-item" id = "currHolderNo"><i class="fa fa-check"></i></li>
-                                                                  <li class="list-group-item" id = "docType"><i class="fa fa-check"></i></li>
-                                                                  <li class="list-group-item" id = "PaperScanDate"><i class="fa fa-check"></i> </li>
-                                                                  <li class="list-group-item" id = "paperProcessDate"><i class="fa fa-check"></i></li>
-                                                                  <li class="list-group-item" id = "paperArchiveDate"><i class="fa fa-check"></i></li>
-                                                                  <li class="list-group-item" id = "preHolderNo"><i class="fa fa-check"></i></li>
-                                                                  <li class="list-group-item" id = "archiver"><i class="fa fa-check"></i></li>
-
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{curr.holder.number.tx}"></span>
+                                                                      <p style="display:inline" id = "currHolderNo" ></p>
+                                                                  <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{documnet.type.tx}"></span>
+                                                                      <p style="display:inline" id = "docType" ></p>
+                                                                      <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{paper.scan.date.tx}"></span>
+                                                                      <p style="display:inline" id = "PaperScanDate" ></p>
+                                                                      <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{paper.processing.date.tx}"></span>
+                                                                      <p style="display:inline" id = "paperProcessDate"  ></p>
+                                                                      <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{paper.archive.date.tx}"></span>
+                                                                      <p style="display:inline" id = "paperArchiveDate"  ></p>
+                                                                      <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{prev.holder.number.tx}"></span>
+                                                                      <p style="display:inline" id = "preHolderNo"  ></p>
+                                                                      <br></li>
+                                                                  <li class="list-group-item thick" th:dir=#{lang.dir}  >
+                                                                      <i class="fa fa-check"></i>
+                                                                      <span style="display:inline" th:text="#{archiver.username.tx}"></span>
+                                                                      <p style="display:inline" id = "archiver"   ></p>
+                                                                      <br></li>
                                                               </ul>
                                                           </div>
                                                       </div>
@@ -243,6 +233,27 @@
                           </div><!-- /row -->
                   </div><!-- /col-lg-9 END SECTION MIDDLE -->
              </div><! --/row -->
+              <!-- message Modal -->
+              <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="messageModal" class="modal fade">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" th:class="'close ' + #{lang.button.dir}"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h3 th:class="'modal-title '+ #{lang.opposite.button.dir}" th:text="#{message.model.tx}"></h3>
+                              <br>
+                              <br>
+                          </div>
+                          <div class="modal-body">
+                              <p style ="font-size: 17px;color:red;" th:class="'thick '+ #{lang.opposite.button.dir}" id="messageId"></p>
+                              <br>
+                          </div>
+                          <div class="modal-footer">
+                              <button data-dismiss="modal" th:class="'btn btn-default '+ #{lang.button.dir}"  type="button" th:text="#{model.cancle.button.tx}">Cancel</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- message modal -->
           </section>
       </section>
  <!--main content end-->
@@ -252,8 +263,8 @@
       <br>
       <footer class="site-footer navbar-fixed-bottom">
           <div class="text-center">
-              2018 - WafaIns
-              <a href="archive.html#" class="go-top">
+              <span th:class="thick" th:text="#{copyrigths.tx}"></span>
+              <a th:href="@{'/archive?lang='+${appLang}}" class="go-top">
                   <i class="fa fa-angle-up"></i>
               </a>
           </div>

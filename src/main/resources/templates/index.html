@@ -49,7 +49,7 @@
         <!--logo end-->
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" th:href="@{/logout}" th:text="#{logout.tx}">Logout</a></li>
+                <li><a class="logout" th:href="@{'/logout?lang='+${appLang}}" th:text="#{logout.tx}">Logout</a></li>
             </ul>
         </div>
     </header>
@@ -67,20 +67,31 @@
                 <p class="centered"><a th:href="@{/index}"><img src="/images/ui-sam.jpg" class="img-circle" width="60"></a></p>
                 <h4 class="centered thick" th:text ="${user.username}">UserName :</h4>
 
-                <li class="mt">
-                    <a class="active" th:href="@{/archive}">
+               <!-- <li class="mt">
+                    <a class="active" th:href="@{'/archive?lang='+${appLang}}">
                         <h4> <i class="fa fa-file-text" aria-hidden="true"></i>
                         <span th:text="#{list.document.tx}">Documents</span></h4>
                     </a>
-                </li>
+                </li>-->
 
+                <li class="sub-menu">
+                    <a href="javascript:;" >
+                        <h4><i class="fa fa-file-text" aria-hidden="true"></i>
+                            <span  th:text="#{list.document.tx}">Documents</span></h4>
+                    </a>
+                    <ul class="sub">
+                        <li><a  th:href="@{'/archive?lang='+${appLang}}">
+                            <h5><span th:text="#{list.document.scan}">Scan</span></h5></a></li>
+                    </ul>
+                </li>
                 <li class="sub-menu">
                     <a href="javascript:;" >
                         <h4><i class="fa fa-folder-open-o" aria-hidden="true"></i>
                         <span th:text="#{list.holder.tx}">Holders</span></h4>
                     </a>
                     <ul class="sub">
-                        <li><a  href="general.html">General</a></li>
+                        <li><a  th:href="@{'/holder?lang='+${appLang}}">
+                            <h5><span th:text="#{list.holder.create}">Scan</span></h5></a></li>
                         <li><a  href="buttons.html">Buttons</a></li>
                         <li><a  href="panels.html">Panels</a></li>
                     </ul>
@@ -124,7 +135,7 @@
     <br>
     <footer class="site-footer navbar-fixed-bottom">
         <div class="text-center">
-            <span th:text="#{copyrigths.tx}"></span>
+            <span th:class="thick" th:text="#{copyrigths.tx}"></span>
             <a href="index.html#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>

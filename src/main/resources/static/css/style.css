@@ -2257,3 +2257,53 @@ label {
 .thick {
     font-weight: bold;
 }
+
+.boxw:hover .box1 {
+    border-bottom: 1px solid #ffffff;
+}
+
+.boxw p {
+    text-align: center;
+    font-size: 17px;
+    color: #f2f2f2;
+    font-weight: bold;
+}
+
+.box_y:hover p {
+     color: #ffdb19;
+ }
+.box_r:hover p {
+    color: #d21612;
+}
+
+.box_b:hover p {
+    color: #2358b4;
+}
+.box_g:hover p {
+    color: #178114;
+}
+
+.boxw:hover {
+    background: #ffffff;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.thick-color {
+    font-weight: bold;
+    color: #298fb4;
+}
+.thick-header {
+    font-weight: bold;
+    color: #5f585a;
+    font-size: 14px;
+}
+.barcode-font {
+    font-family: 'Libre Barcode 39 Extended Text', cursive;
+    font-size: 20px;
+}

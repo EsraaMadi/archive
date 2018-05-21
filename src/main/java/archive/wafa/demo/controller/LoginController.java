@@ -20,12 +20,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
 @Slf4j
 @Controller
-//@SessionAttributes("userAuth")
+//@SessionAttributes("language")
 public class LoginController {
 	
 
@@ -43,39 +44,48 @@ public class LoginController {
 		this.userRolesConvertor = userRolesConvertor;
 	}
 
+	// Set language as session variable
+	//@ModelAttribute("language")
+	public String getLanguage(HttpServletRequest request)
+	{
+		language= request.getParameter("lang");
+		if (language== null)
+		{
+			language="en";
+		}
+		request.getSession().setAttribute("language",language);
+		//System.out.println("-------------777"+request.getSession().getAttribute("language")+"------"+language);
+		return language ;
+	}
 	// Get - Login page
 	@RequestMapping(value={"/","/login_page"}, method = RequestMethod.GET)
-	public String  login_page( @Valid @ModelAttribute("userAuthCommand") UserAuthCommand userAuth , BindingResult bindingResult,HttpServletRequest request){
+	public String  login_page(@Valid @ModelAttribute("userAuthCommand") UserAuthCommand userAuth , BindingResult bindingResult ,HttpServletRequest request, HttpSession session  ){
 		if(bindingResult.hasErrors()){
 			bindingResult.getAllErrors().forEach(objectError -> {
 				log.error(objectError.toString());
 			});
 		}
 
-		 language= request.getParameter("lang");
-		if (language== null)
-		{
-			language="en";
-		}
-		//System.setProperty("app.lang.test",language);
-		//System.out.println("-----------------222"+ System.getProperty("app.lang.test"));
-		//System.out.println("----------------------"+language);
+		getLanguage(request);
+
 		return "login";
 	}
 
 	// Get - index page
 	@RequestMapping("/loginindex")
-	String loginindex(){
+	String loginindex( HttpSession session ,HttpServletRequest request){
+		//System.out.println("-------------222"+session.getAttribute("language")+"------"+language);
 		return "redirect:index?lang="+language;
 	}
 
 	// Get - index page
 	@RequestMapping("/index")
-	String index(Model model){
+	String index(Model model ){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = new User();
 		user.setUsername(auth.getName());
 		model.addAttribute("user", user);
+		model.addAttribute("appLang",language);
 		return "index";
 	}
 
@@ -113,7 +123,7 @@ public class LoginController {
 
 	// Get - Logout page
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response ) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null){
 			new SecurityContextLogoutHandler().logout(request, response, auth);

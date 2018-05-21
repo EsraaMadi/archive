@@ -1,5 +1,6 @@
 package archive.wafa.demo.service;
 
+import archive.wafa.demo.model.ArchiveReport;
 import archive.wafa.demo.model.Document;
 import archive.wafa.demo.repository.DocumentRepository;
 import archive.wafa.demo.repository.SortedProcedureRepository;
@@ -15,12 +16,10 @@ import java.util.Optional;
 public class DocumentServiceImpl implements DocumentService {
 
     private DocumentRepository documentRepository;
-    private SortedProcedureRepository sortedProcedureRepository ;
     private EntityManager em;
 
-    public DocumentServiceImpl(DocumentRepository documentRepository, SortedProcedureRepository sortedProcedureRepository, EntityManager em) {
+    public DocumentServiceImpl(DocumentRepository documentRepository, EntityManager em) {
         this.documentRepository = documentRepository;
-        this.sortedProcedureRepository = sortedProcedureRepository;
         this.em = em;
     }
 
@@ -46,14 +45,25 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Document archiveDocument(Long docId , String holderNo , String username) {
+    public ArchiveReport DocumentReport(String username) {
+        StoredProcedureQuery Query = em.createNamedStoredProcedureQuery("DATS_REPORT_BY_USER");
+        Query.setParameter("P_USERNAME_IN", username);
+        Query.execute();
+        List<ArchiveReport> resultList = Query.getResultList();
+
+        return resultList.get(0);
+    }
+
+    @Override
+    public Document archiveDocument(Long docId , String holderNo , String username , String lang) {
         //int i = sortedProcedureRepository.archiveDoc(docId);
 
-        StoredProcedureQuery Query = em.createNamedStoredProcedureQuery("Archive_Doc_NEW");
+        StoredProcedureQuery Query = em.createNamedStoredProcedureQuery("Archive_Doc");
         System.out.println(holderNo+"--------------------------"+username);
         Query.setParameter("HOLDER_BARCODE_IN", holderNo);
         Query.setParameter("DOC_BARCODE_IN", docId);
         Query.setParameter("USERNAME_IN", username);
+        Query.setParameter("LANG_IN", lang);
         Query.execute();
         List<Document> resultList = Query.getResultList();
 

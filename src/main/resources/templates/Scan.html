@@ -14,7 +14,7 @@
 <div class="container">
 	<form id = "archiveDocumentForm" th:object="${document}" th:action="@{'/Archivee/doc/' +${document.DocumentNo}}"
 		  method="GET" class="form-signin"  >
-		<h3 class="form-signin-heading" th:text="Doc"></h3>
+		<h3 class="form-signin-heading" th:text="doc"></h3>
 		<br/>
 
 		<input th:type="number" th:maxlength="13" id="barcode" name="barcode"  th:placeholder="BarcodeNumber"

@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -80,15 +77,16 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
        // System.out.println("-----------------111111"+ System.getProperty("app.lang.test"));
-    	 httpSecurity.
+        httpSecurity.
  		authorizeRequests()
  			.antMatchers("/").permitAll()
                  .antMatchers("/NewUser").permitAll()
                  .antMatchers("/login_page").permitAll()
-                 .antMatchers("/loginindex").permitAll()
-                 .antMatchers("/index").permitAll()
-                 //.antMatchers("/index").hasAuthority("Archive_User")
-                 .antMatchers("/archive").hasAuthority("Archive_User")
+                 .antMatchers("/loginindex").hasAuthority("Archive_User")
+                 .antMatchers("/index").hasAuthority("Archive_User")
+                 //.antMatchers("/archive").permitAll()
+                .antMatchers("/archive").hasAuthority("Archive_User")
+                .antMatchers("/holder").hasAuthority("Archive_User")
             .antMatchers("/scan/doc").permitAll()
  			.antMatchers("/registration").permitAll()
  			.antMatchers("/home").hasAuthority("Archive_User")

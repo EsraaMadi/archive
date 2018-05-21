@@ -1,8 +1,8 @@
 package archive.wafa.demo.controller;
 
+import archive.wafa.demo.model.ArchiveReport;
 import archive.wafa.demo.model.Document;
 import archive.wafa.demo.model.User;
-import archive.wafa.demo.repository.SortedProcedureRepository;
 import archive.wafa.demo.service.DocumentService;
 import archive.wafa.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,13 @@ import javax.servlet.http.*;
 public class DocumentController {
 
 
-    private SortedProcedureRepository sortedProcedureRepository ;
     private DocumentService documentService;
     private UserService userService;
+    private String language;
+    private User userD;
 
-    public DocumentController(SortedProcedureRepository sortedProcedureRepository, DocumentService documentService, UserService userService) {
-        this.sortedProcedureRepository = sortedProcedureRepository;
+
+    public DocumentController( DocumentService documentService, UserService userService) {
         this.documentService = documentService;
         this.userService = userService;
     }
@@ -37,27 +38,47 @@ public class DocumentController {
     public User setAppUser (HttpSession session)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
-        session.setAttribute("AppUser" , user);
-        return user ;
+        userD = userService.findByUsername(auth.getName());
+        session.setAttribute("AppUser" , userD);
+        return userD ;
+    }
+
+    // Set language as session variable
+    //@ModelAttribute("language")
+    public String getLanguage(HttpServletRequest request)
+    {
+        language= request.getParameter("lang");
+        if (language== null)
+        {
+            language="en";
+        }
+        request.getSession().setAttribute("language",language);
+        //System.out.println("-------------777"+request.getSession().getAttribute("language")+"------"+language);
+        return language ;
     }
 
     // Get - archive page
     @RequestMapping(value="/archive" , method = RequestMethod.GET)
-    String ArchiveDoc_Get(Model model ,HttpSession session){
+    String ArchiveDoc_Get(Model model ,HttpServletRequest request ){
+
         Document document = new Document();
         model.addAttribute("document", document);
-        model.addAttribute("user", setAppUser (session));
+        model.addAttribute("user", setAppUser (request.getSession()));
+        model.addAttribute("appLang",getLanguage(request));
+        ArchiveReport report = documentService.DocumentReport(userD.getUsername());
+        System.out.println("-----"+report.getPassDocOnceSum()+"-----"+report.getPassDocTwiceSum()+"-----"+report.getFaildDocOnceSum()+"-----"+report.getFaildDocTwiceSum());
+        model.addAttribute("report",report);
+
         return "archive";
     }
 
     // Get - archive page (is called from JS function )
     @RequestMapping(value="/Archive/doc/{holderNo}", method = RequestMethod.GET)
-    public @ResponseBody Document ArchiveDoc_Get_JS(@PathVariable String holderNo , HttpServletRequest request, HttpServletResponse response ,@SessionAttribute("AppUser") User user){
+    public @ResponseBody Document ArchiveDoc_Get_JS(@PathVariable String holderNo , HttpServletRequest request ,@SessionAttribute("AppUser") User user){
         String docno = request.getParameter("documentNo");
         //System.out.println( "000000000000000000000----------------  "+ user.getUsername() + "------" );
         //System.out.println( "111111111111111111111----------------  "+ docno + "------" );
-        Document document =  documentService.archiveDocument(new Long( docno), holderNo , user.getUsername());
+        Document document =  documentService.archiveDocument(new Long( docno), holderNo , user.getUsername(), language);
         //System.out.println( "22222222222222222222----------------  "+ document.getDocumentNo()+ "------" + document.getArchiveStatus()+ document.getRersultMsg());
         return document;
     }
@@ -70,6 +91,5 @@ public class DocumentController {
         model.addAttribute("document", document);
         return "Scan";
     }*/
-
 
 }

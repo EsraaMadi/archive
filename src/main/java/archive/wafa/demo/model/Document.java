@@ -3,6 +3,7 @@ package archive.wafa.demo.model;
 import javax.persistence.*;
 
 @Entity
+// CURSOR result not a class
 //@Table(name = "XX_DMS_DOCUMENT_T")
 public class Document {
 
@@ -60,7 +61,7 @@ public class Document {
 
     public Document(Long documentId, Long documentNo, String rersultMsg, int archiveStatus, String paperScanDate, String currDocumnetHolder, String pervDocumnetHolder, String documentType, String paperProcessDate, String paperArchiveDate, String archiver, int docPassOnceSum, int docPassTwiceSum, int docFaildOnceSum, int docFaildTwiceSum) {
         this.documentId = documentId;
-        DocumentNo = documentNo;
+        this.DocumentNo = documentNo;
         this.rersultMsg = rersultMsg;
         this.archiveStatus = archiveStatus;
         this.paperScanDate = paperScanDate;
@@ -73,7 +74,7 @@ public class Document {
         this.docPassTwiceSum = docPassTwiceSum;
         this.docFaildOnceSum = docFaildOnceSum;
         this.docFaildTwiceSum = docFaildTwiceSum;
-        archiver = archiver;
+        this.archiver = archiver;
     }
 
 

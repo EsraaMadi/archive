@@ -1,7 +1,6 @@
 package archive.wafa.demo.bootstrap;
 
 
-import archive.wafa.demo.command.UserAuthCommand;
 import archive.wafa.demo.service.RoleService;
 import archive.wafa.demo.service.UserAuthService;
 import archive.wafa.demo.service.UserService;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
 
 
 @Component
@@ -50,6 +50,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
 
 
 //Integer s_out = sortedProcedureRepository.archiveDoc("1201000797202");
