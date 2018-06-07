@@ -3,6 +3,7 @@ package archive.wafa.demo.model;
 import org.hibernate.validator.constraints.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ public class User  {
 	//@NotEmpty(message = "*Please provide your username")
 	@Column(name = "USER_NAME")
     private String username;   
+
 
 	@Column(name = "ACCESS_TYP")
     private int accessType;

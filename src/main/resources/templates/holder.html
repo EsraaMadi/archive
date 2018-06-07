@@ -98,9 +98,8 @@
                               <span th:text="#{list.user.tx}">Users</span></h4>
                       </a>
                       <ul class="sub">
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
+                          <li><a  th:href="@{'/accessUser?lang='+${appLang}}">
+                              <h5><span th:text="#{list.user.access}">Scan</span></h5></a></li>
                       </ul>
                   </li>
               </ul>
